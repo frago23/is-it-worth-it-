@@ -33,8 +33,14 @@ const Enchant = {
           }
      },
 
+     mounted() {
+          this.loadVars();
+          this.calculateProfit();
+     },
+
      methods: {
           calculateProfit() {
+               this.saveVars();
                this.marketTaxPerc = this.premiumActive ? 3 : 6;
                this.getTotalMainCost();
                this.getTotalRuneCost();
@@ -45,6 +51,28 @@ const Enchant = {
                this.total_cost = this.main_total + this.rune_total_cost;
                this.profit = this.finalSellPrice - this.total_cost;
                this.hasProfit = this.profit > 0;
+          },
+
+          saveVars() {
+               localStorage.setItem('buy_price_main', this.buy_price_main);
+               localStorage.setItem('main_count', this.main_count);
+               localStorage.setItem('runes_needed', this.runes_needed);
+               localStorage.setItem('isBuyOrderMain', this.isBuyOrderMain);
+               localStorage.setItem('isBuyOrderRune', this.isBuyOrderRune);
+               localStorage.setItem('sell_price', this.sell_price);
+               localStorage.setItem('premiumActive', this.premiumActive);
+          },
+
+          loadVars() {
+               // * 1 to convert from string to number
+               this.buy_price_main = localStorage.getItem('buy_price_main') * 1;
+               this.main_count = localStorage.getItem('main_count') * 1;
+               this.runes_needed = localStorage.getItem('runes_needed') * 1;
+               this.sell_price = localStorage.getItem('sell_price') * 1;
+               // bools
+               this.isBuyOrderMain = localStorage.getItem('isBuyOrderMain');
+               this.isBuyOrderRune = localStorage.getItem('isBuyOrderRune');
+               this.premiumActive = localStorage.getItem('premiumActive');
           },
 
           getTotalMainCost() {
