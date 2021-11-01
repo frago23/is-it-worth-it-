@@ -26,11 +26,16 @@ const Enchant = {
                buy_rune_setupFee: 0,
                sell_market_tax: 0,
                sell_setupFee: 0,
+
+               premiumActive: false,
+               marketTaxPerc: 6,
+               setupFeePerc: 1.5
           }
      },
 
      methods: {
           calculateProfit() {
+               this.marketTaxPerc = this.premiumActive ? 3 : 6;
                this.getTotalMainCost();
                this.getTotalRuneCost();
                this.getSellOrderTax();
@@ -44,21 +49,21 @@ const Enchant = {
 
           getTotalMainCost() {
                this.buy_price_main_total_notax = this.main_count * this.buy_price_main; 
-               this.buy_main_setupFee = this.isBuyOrderMain ? this.getPercentOf(this.buy_price_main_total_notax, 1.5) : 0;
+               this.buy_main_setupFee = this.isBuyOrderMain ? this.getPercentOf(this.buy_price_main_total_notax, this.setupFeePerc) : 0;
                this.main_total = this.buy_price_main_total_notax + this.buy_main_setupFee 
           },
 
           getTotalRuneCost() {
                this.rune_number = this.runes_needed * this.main_count;
                this.buy_price_rune_total_notax = this.rune_number * this.buy_price_rune;
-               this.buy_rune_setupFee = this.isBuyOrderRune ? this.getPercentOf(this.buy_price_rune_total_notax, 1.5) : 0;
+               this.buy_rune_setupFee = this.isBuyOrderRune ? this.getPercentOf(this.buy_price_rune_total_notax, this.setupFeePerc) : 0;
                this.rune_total_cost = this.buy_price_rune_total_notax + this.buy_rune_setupFee;
           },
 
           getSellOrderTax() {
                this.total_sell_price = this.sell_price * this.main_count;
-               this.sell_market_tax = this.getPercentOf(this.total_sell_price, 6);
-               this.sell_setupFee = this.getPercentOf(this.total_sell_price, 1.5);
+               this.sell_market_tax = this.getPercentOf(this.total_sell_price, this.marketTaxPerc);
+               this.sell_setupFee = this.getPercentOf(this.total_sell_price, this.setupFeePerc);
                this.finalSellPrice = this.total_sell_price - this.sell_market_tax - this.sell_setupFee;
           },
 

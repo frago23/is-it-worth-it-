@@ -83,6 +83,14 @@
 
                     <p>Sell price - no tax: <strong>{{ total_sell_price }}</strong></p>
                     <p>Sell price - w/ tax: <strong>{{ finalSellPrice }}</strong></p>
+
+                    <div class="form-check">
+                         <input class="form-check-input" type="checkbox" v-model="premiumActive"
+                              v-on:change="calculateProfit()" id="premium-user">
+                         <label class="form-check-label" for="premium-user">
+                              Premium active
+                         </label>
+                    </div>
                </div>
           </div>
 
@@ -90,10 +98,10 @@
                <h2 class="form-label">Profit</h2>
                <p>Total cost: {{ total_cost }}</p>
                <ul>
-                    <li>Buy setup fee main 1.5%: <strong>{{ buy_main_setupFee }}</strong></li>
-                    <li>Buy setup fee runes 1.5%: <strong>{{ buy_rune_setupFee }}</strong></li>
-                    <li>Sell market tax 6%: <strong>{{ sell_market_tax }}</strong></li>
-                    <li>Sell setup fee 1.5%: <strong>{{ sell_setupFee }}</strong></li>
+                    <li>[Buy] setup fee main {{ setupFeePerc }}%: <strong>{{ buy_main_setupFee }}</strong></li>
+                    <li>[Buy] setup fee runes {{ setupFeePerc }}%: <strong>{{ buy_rune_setupFee }}</strong></li>
+                    <li>[Sale] market tax {{ marketTaxPerc }}%: <strong>{{ sell_market_tax }}</strong></li>
+                    <li>[Sale] setup fee {{ setupFeePerc }}%: <strong>{{ sell_setupFee }}</strong></li>
                </ul>
                <p>Profit: <strong>{{ profit }}</strong></p>
           </div>
