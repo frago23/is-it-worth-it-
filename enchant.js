@@ -55,6 +55,7 @@ const Enchant = {
 
           saveVars() {
                localStorage.setItem('buy_price_main', this.buy_price_main);
+               localStorage.setItem('buy_price_rune', this.buy_price_rune);
                localStorage.setItem('main_count', this.main_count);
                localStorage.setItem('runes_needed', this.runes_needed);
                localStorage.setItem('isBuyOrderMain', this.isBuyOrderMain);
@@ -67,12 +68,14 @@ const Enchant = {
                // * 1 to convert from string to number
                this.buy_price_main = localStorage.getItem('buy_price_main') * 1;
                this.main_count = localStorage.getItem('main_count') * 1;
+               this.buy_price_rune = localStorage.getItem('buy_price_rune');
                this.runes_needed = localStorage.getItem('runes_needed') * 1;
                this.sell_price = localStorage.getItem('sell_price') * 1;
                // bools
-               this.isBuyOrderMain = localStorage.getItem('isBuyOrderMain');
-               this.isBuyOrderRune = localStorage.getItem('isBuyOrderRune');
-               this.premiumActive = localStorage.getItem('premiumActive');
+               this.isBuyOrderMain = JSON.parse(localStorage.getItem('isBuyOrderMain'));
+               this.isBuyOrderRune = JSON.parse(localStorage.getItem('isBuyOrderRune'));
+               this.premiumActive = JSON.parse(localStorage.getItem('premiumActive'));
+               this.marketTaxPerc = this.premiumActive ? 3 : 6;
           },
 
           getTotalMainCost() {
