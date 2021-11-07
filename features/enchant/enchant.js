@@ -54,34 +54,41 @@ const Enchant = {
           },
 
           saveVars() {
-               localStorage.setItem('buy_price_main', this.buy_price_main);
-               localStorage.setItem('buy_price_rune', this.buy_price_rune);
-               localStorage.setItem('main_count', this.main_count);
-               localStorage.setItem('runes_needed', this.runes_needed);
-               localStorage.setItem('isBuyOrderMain', this.isBuyOrderMain);
-               localStorage.setItem('isBuyOrderRune', this.isBuyOrderRune);
-               localStorage.setItem('sell_price', this.sell_price);
-               localStorage.setItem('premiumActive', this.premiumActive);
+               const enchantValues = {
+                    buy_price_main: this.buy_price_main,
+                    buy_price_rune: this.buy_price_rune,
+                    main_count: this.main_count,
+                    runes_needed: this.runes_needed,
+                    isBuyOrderMain: this.isBuyOrderMain,
+                    isBuyOrderRune: this.isBuyOrderRune,
+                    sell_price: this.sell_price,
+                    premiumActive: this.premiumActive
+               };
+               localStorage.setItem("enchant", JSON.stringify(enchantValues));
           },
 
           loadVars() {
+               const enchantValues = JSON.parse(localStorage.getItem("enchant"));
+               if (!enchantValues)
+                    return;
+                    
                // * 1 to convert from string to number
-               this.buy_price_main = localStorage.getItem('buy_price_main') * 1;
-               this.main_count = localStorage.getItem('main_count') * 1;
-               this.buy_price_rune = localStorage.getItem('buy_price_rune');
-               this.runes_needed = localStorage.getItem('runes_needed') * 1;
-               this.sell_price = localStorage.getItem('sell_price') * 1;
+               this.buy_price_main = enchantValues.buy_price_main;
+               this.main_count = enchantValues.main_count;
+               this.buy_price_rune = enchantValues.buy_price_rune;
+               this.runes_needed = enchantValues.runes_needed;
+               this.sell_price = enchantValues.sell_price;
                // bools
-               this.isBuyOrderMain = JSON.parse(localStorage.getItem('isBuyOrderMain'));
-               this.isBuyOrderRune = JSON.parse(localStorage.getItem('isBuyOrderRune'));
-               this.premiumActive = JSON.parse(localStorage.getItem('premiumActive'));
-               this.marketTaxPerc = this.premiumActive ? 3 : 6;
+               this.isBuyOrderMain = enchantValues.isBuyOrderMain
+               this.isBuyOrderRune = enchantValues.isBuyOrderRune
+               this.premiumActive = enchantValues.premiumActive
+               this.marketTaxPerc = enchantValues.premiumActive ? 3 : 6;
           },
 
           getTotalMainCost() {
-               this.buy_price_main_total_notax = this.main_count * this.buy_price_main; 
+               this.buy_price_main_total_notax = this.main_count * this.buy_price_main;
                this.buy_main_setupFee = this.isBuyOrderMain ? this.getPercentOf(this.buy_price_main_total_notax, this.setupFeePerc) : 0;
-               this.main_total = this.buy_price_main_total_notax + this.buy_main_setupFee 
+               this.main_total = this.buy_price_main_total_notax + this.buy_main_setupFee
           },
 
           getTotalRuneCost() {

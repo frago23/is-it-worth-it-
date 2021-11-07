@@ -5,7 +5,7 @@
 .enchant-buy-form {
      padding: 10px;
      margin: 10px;
-     box-shadow: 0 3px 10px rgba(255, 0, 255, 0.2);
+     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
      flex: 1;
      min-width: 250px;
 }
@@ -15,5 +15,9 @@
 }
 
 .loss {
-     box-shadow: 0 0px 10px rgba(255, 0, 0, 1);
+     box-shadow: 0 0px 10px rgb(165, 56, 56);
+}
+
+.nav {
+     margin: 50px;
 }
